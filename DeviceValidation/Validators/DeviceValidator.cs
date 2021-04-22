@@ -7,7 +7,7 @@ namespace DeviceV2.Validators
 {
     public class DeviceValidator : AbstractValidator<Device>
     {
-        public DeviceValidator()
+        public DeviceValidator(string productID)
         {
             RuleFor(x => x.ActivityLog).SetValidator(new ActivityLogValidator());
             RuleFor(x => x.AlarmsDefinition).SetValidator(new AlarmsDefinitionValidation());
@@ -25,7 +25,7 @@ namespace DeviceV2.Validators
             RuleFor(x => x.HardwareEnabled).SetValidator(new HardwareEnabledValidator());
             RuleFor(x => x.HardwareInformation).SetValidator(new HardwareInformationValidator()); // Validation some other props
             RuleFor(x => x.LightEvent).SetValidator(new LightEventValidator());
-            RuleFor(x => x.Location).SetValidator(new LocationValidator());
+            RuleFor(x => x.Location).SetValidator(new LocationValidator(productID));
             RuleFor(x => x.LocationSettings).SetValidator(new LocationSettingsValidator());
             RuleFor(x => x.PresetMessages).SetValidator(new PresetMessagesValidator());
             RuleFor(x => x.ProximityEvent).SetValidator(new ProximityEventValidator());
@@ -38,7 +38,7 @@ namespace DeviceV2.Validators
             RuleFor(x => x.Temperature).SetValidator(new TemperatureValidator());
             RuleFor(x => x.TemperatureSettings).SetValidator(new TemperatureSettingsValidator());
             RuleFor(x => x.WifiReadings).SetValidator(new WifiReadingsValidator());
-            RuleFor(x => x.LocationOverrideByWifi).SetValidator(new LocationOverrideByWifiValidator());
+            RuleFor(x => x.LocationOverrideByWifi).SetValidator(new LocationOverrideByWifiValidator(productID));
         }
     }
 }

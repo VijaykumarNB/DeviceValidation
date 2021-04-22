@@ -11,7 +11,7 @@ namespace DeviceValidation.Validators
     {
         public IotDeviceSchemaValidator()
         {
-            RuleFor(x => x.Device).SetValidator(new DeviceValidator());
+            RuleFor(x => x.Device).SetValidator(m => new DeviceValidator(m.ProductId));
         }
     }
 }
