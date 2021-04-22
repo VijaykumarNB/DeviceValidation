@@ -7,12 +7,12 @@ namespace DeviceV2.Validators.Sensor
 {
     public class LocationOverrideByWifiValidator : AbstractValidator<LocationOverrideByWifi>
     {
-        public LocationOverrideByWifiValidator()
+        public LocationOverrideByWifiValidator(string ProductID)
         {
             RuleFor(x => x.Metadata).SetValidator(new MetaDataValidator());
             RuleFor(x => x.Accuracy)
                 .TransformToNotNullableDecimal()
-                .ValidateRadius();
+                .ValidateRadius(ProductID);
             RuleFor(x => x.Latitude)
                 .TransformToNotNullableDecimal()
                 .ValidateLatitude();

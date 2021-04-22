@@ -1,5 +1,6 @@
 ﻿using System;
 using FluentValidation;
+using DeviceValidation.util;
 
 namespace DeviceV2.Validators.CustomValidationRules
 {
@@ -9,7 +10,7 @@ namespace DeviceV2.Validators.CustomValidationRules
         public const decimal FarSouth = -90;
         public const decimal FarWest = 180;
         public const decimal FarEast = -180;
-        public const decimal AccuracyMaxLevel = 500.0M;
+        
 
         public static IRuleBuilderOptions<T, decimal>
             ValidateLatitude<T>(this IRuleBuilder<T, decimal> ruleBuilder)
@@ -32,8 +33,13 @@ namespace DeviceV2.Validators.CustomValidationRules
         }
 
         public static IRuleBuilderOptions<T, decimal>
-            ValidateRadius<T>(this IRuleBuilder<T, decimal> ruleBuilder)
+            ValidateRadius<T>(this IRuleBuilder<T, decimal> ruleBuilder, string ProductID)
         {
+            if (string.IsNullOrEmpty(ProductID))
+                return null;
+
+            var AccuracyMaxLevel = ProductLocationUtil.GetMaxAccuracyLevelByProductID(ProductID);
+
             return ruleBuilder.LessThan(AccuracyMaxLevel)
                 .WithMessage("[{PropertyName}] of [{PropertyValue}] cannot be greater than [" + AccuracyMaxLevel + "].");
         }
